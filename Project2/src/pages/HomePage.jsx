@@ -1,21 +1,21 @@
 import { useState, useEffect} from "react";
-import './App.css'
+import './App.css';
+import { useNavigate } from 'react-router-dom';
 
-function App() {
+function HomePage() {
   const [count, setCount] = useState(0);
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
 
   useEffect(() => {
-    const   
- intervalId = setInterval(() => {
+    const intervalId = setInterval(() => {
       setCurrentTime(new Date().toLocaleTimeString());
     }, 1000);
 
     return () => clearInterval(intervalId);
   }, []);
 
-  return (
-    <>
+return (
+    <div>
       <h1>Spotify React</h1>
       <div className="card">
       <p>Current Time: {currentTime}</p>
@@ -25,5 +25,8 @@ function App() {
         Generating Artists?: Where we track the number of times a user generates artists at certain times. This data can be used to analyze user behavior and identify popular artists. 
         </p>
       </div>
-    </>
+    </div>
   )
+}
+
+export default HomePage;
