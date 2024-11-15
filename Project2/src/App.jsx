@@ -1,32 +1,26 @@
-import { useState, useEffect} from "react";
-import './App.css'
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
-function App() {
-  const [count, setCount] = useState(0);
-  const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
+const Home = () => <h2>Home</h2>;
+const GenerateEmojis = () => <h2>GenerateEmojis</h2>;
 
-  useEffect(() => {
-    const   
- intervalId = setInterval(() => {
-      setCurrentTime(new Date().toLocaleTimeString());
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
+const App = () => {
   return (
-    <>
-      <h1>Spotify React</h1>
-      <div className="card">
-      <p>Current Time: {currentTime}</p>
-      <p>Count: {count}</p>
-      <button onClick={() => setCount(count + 1)}>Generate Artists</button>
-        <p>
-        Generating Artists?: Where we track the number of times a user generates artists at certain times. This data can be used to analyze user behavior and identify popular artists. 
-        </p>
-      </div>
-    </>
-  )
-}
+    <Router>
+      <nav>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/about">About</Link></li>
+        </ul>
+      </nav>
 
-export default App
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/about" component={About} />
+      </Switch>
+    </Router>
+  );
+};
+
+export default App;
+
