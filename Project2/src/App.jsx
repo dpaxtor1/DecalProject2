@@ -5,15 +5,14 @@ import ResultsPage from './pages/ResultsPage';
 
 function App() {
     return (
-        <div>
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/results" element={<ResultsPage />} />
-            </Routes>
-        </div>
+        <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/results" element={<ResultsPage />} />
+        </Routes>
     );
 }
 
 export default App;
+
 
 

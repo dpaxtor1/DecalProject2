@@ -7,7 +7,7 @@ function HomePage() {
         const redirectUri = encodeURIComponent(import.meta.env.VITE_SPOTIFY_REDIRECT_URI);
         const scopes = encodeURIComponent('user-top-read');
         const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scopes}`;
-        window.location.href = authUrl; // Redirect user to Spotify login
+        window.location.href = authUrl; // Redirect user to Spotify login page
     };
 
     return (

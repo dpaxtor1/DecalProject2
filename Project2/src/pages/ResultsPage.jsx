@@ -1,43 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
 function ResultsPage() {
+    const [authorizationCode, setAuthorizationCode] = useState('');
     const [artists, setArtists] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchArtists = async () => {
-            try {
-                const response = await axios.get(
-                    'https://api.spotify.com/v1/me/top/artists',
-                    {
-                        headers: {
-                            Authorization: `Bearer ${import.meta.env.VITE_SPOTIFY_ACCESS_TOKEN}`, // Use Vite's environment variable
-                        },
-                    }
-                );
-                setArtists(response.data.items || []);
-            } catch (err) {
-                setError('Failed to fetch artists');
-            } finally {
-                setLoading(false);
-            }
-        };
+    // Mock data for top artists
+    const mockArtists = [
+        { id: 1, name: 'Artist 1', genres: ['Pop', 'Rock'], popularity: 90 },
+        { id: 2, name: 'Artist 2', genres: ['Jazz'], popularity: 85 },
+        { id: 3, name: 'Artist 3', genres: ['Classical'], popularity: 80 },
+        { id: 4, name: 'Artist 4', genres: ['Hip Hop'], popularity: 75 },
+        { id: 5, name: 'Artist 5', genres: ['Indie'], popularity: 70 },
+    ];
 
-        fetchArtists();
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get('code');
+
+        if (code) {
+            setAuthorizationCode(code);
+            // Simulate fetching artists (replace this with actual API call later)
+            setArtists(mockArtists);
+        } else {
+            setError('Authorization code not found. Please log in again.');
+        }
     }, []);
 
-    if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
 
     return (
         <div>
-            <h1>Generated Results</h1>
+            <h1>Your Top Artists</h1>
+            {authorizationCode && <p>Authorization Code: {authorizationCode}</p>}
             {artists.length > 0 ? (
                 <ul>
-                    {artists.map((artist, index) => (
-                        <li key={artist.id || index}>
+                    {artists.map((artist) => (
+                        <li key={artist.id}>
                             <p>Name: {artist.name}</p>
                             <p>Genres: {artist.genres.join(', ')}</p>
                             <p>Popularity: {artist.popularity}</p>
@@ -52,5 +51,6 @@ function ResultsPage() {
 }
 
 export default ResultsPage;
+
 
 
