@@ -1,39 +1,23 @@
+import React from 'react';
 import '../App.css';
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
-  const [count, setCount] = useState(0);
-  const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
-  const navigate = useNavigate();
+    const handleLogin = () => {
+        const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+        const redirectUri = encodeURIComponent(import.meta.env.VITE_SPOTIFY_REDIRECT_URI);
+        const scopes = encodeURIComponent('user-top-read');
+        const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scopes}`;
+        window.location.href = authUrl; // Redirect user to Spotify login page
+    };
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentTime(new Date().toLocaleTimeString());
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  const handleGenerate = () => {
-    setCount(count + 1); // Increase count
-    navigate('/results'); // Navigate to the results page
-  };
-
-  return (
-    <div>
-      <h1>Spotify React</h1>
-      <div className="card">
-        <p>Current Time: {currentTime}</p>
-        <p>Count: {count}</p>
-        <button onClick={handleGenerate}>Generate Artists</button>
-        <p>
-          Generating Artists?: Where we track the number of times a user generates artists at certain times.
-          This data can be used for future analysis.
-        </p>
-      </div>
-    </div>
-  );
+    return (
+        <div>
+            <h1>Welcome to Spotify Top Artists</h1>
+            <button onClick={handleLogin}>Login with Spotify</button>
+        </div>
+    );
 }
 
 export default HomePage;
+
+
